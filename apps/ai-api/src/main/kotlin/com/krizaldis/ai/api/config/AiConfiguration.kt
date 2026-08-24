@@ -7,9 +7,9 @@ import org.springframework.context.annotation.Configuration
 import org.springframework.web.reactive.function.client.WebClient
 
 @Configuration
-class AiConfiguration {
+open class AiConfiguration {
     @Bean
-    fun chatModel(
+    open fun chatModel(
         @Autowired properties: AiProperties,
         @Autowired webClient: WebClient,
     ): OpenAiChatModel = OpenAiChatModel(webClient, properties)

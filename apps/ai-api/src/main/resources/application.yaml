@@ -15,7 +15,7 @@ ai:
   chat:
     model: gpt-4o-mini
     temperature: 0.2
-    max-token: 1000
+    max-tokens: 1000
 
   timeout:
     connect: 2s
