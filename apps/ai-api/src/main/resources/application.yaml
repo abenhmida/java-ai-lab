@@ -5,7 +5,27 @@ spring:
 server:
   port: 8080
 
+ai:
+  provider: openai
+
+  openai:
+    base-url: ${AI_BASE_URL:https://api.openai.com}
+    api-key: ${AI_API_KEY:}
+
+  chat:
+    model: gpt-4o-mini
+    temperature: 0.2
+    max-token: 1000
+
+  timeout:
+    connect: 2s
+    read: 30s
+
+  retry:
+    max-attempts: 3
+    initial-backoff: 500ms
+
 logging:
   level:
-    root: INFO
-    com.shadow.ai: DEBUG
+    root: info
+    com.shadow.ai: debug

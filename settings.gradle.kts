@@ -10,5 +10,5 @@ rootProject.name = "java-ai-lab"
 include(
     ":apps:ai-api",
     ":libs:ai-core",
-    ":libs:ai-contracts"
+    ":libs:ai-contracts",
 )

@@ -1,5 +1,5 @@
 package com.krizaldis.ai.core
 
 interface ChatModel {
-    fun chat(prompt: String): String
+    fun chat(request: ChatRequest): ChatResult
 }

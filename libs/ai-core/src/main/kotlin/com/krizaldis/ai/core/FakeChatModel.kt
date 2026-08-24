@@ -1,7 +1,7 @@
 package com.krizaldis.ai.core
 
 class FakeChatModel : ChatModel {
-    override fun chat(prompt: String): String {
+    override fun chat(request: ChatRequest): ChatResult {
         TODO("Not yet implemented")
     }
 }
