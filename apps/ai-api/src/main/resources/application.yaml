@@ -25,6 +25,10 @@ ai:
     max-attempts: 3
     initial-backoff: 500ms
 
+  prompt:
+    default-template: kafka-explainer
+    default-version: v1
+
 logging:
   level:
     root: info

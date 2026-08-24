@@ -6,28 +6,45 @@ import com.krizaldis.ai.core.ChatRequest
 import com.krizaldis.ai.core.ChatResult
 import com.krizaldis.ai.core.Role
 import com.krizaldis.ai.core.TokenUsage
-import org.springframework.stereotype.Service
+import com.krizaldis.ai.core.prompt.PromptRegistry
+import com.krizaldis.ai.core.prompt.PromptRenderer
+import com.krizaldis.ai.core.prompt.PromptVariables
 
-@Service
 class ChatService(
     private val chatModel: ChatModel,
+    private val promptRegistry: PromptRegistry,
+    private val promptRenderer: PromptRenderer,
 ) {
     fun chat(message: String): ChatResult {
+        val template =
+            promptRegistry.get(
+                "kafka-explainer",
+                "v1",
+            )
+
+        val rendered =
+            promptRenderer.render(
+                template = template,
+                variables =
+                    PromptVariables(
+                        mapOf(
+                            "topic" to message,
+                            "audience" to "senior Java developer",
+                        ),
+                    ),
+            )
+
         val request =
             ChatRequest(
                 messages =
                     listOf(
                         ChatMessage(
                             role = Role.SYSTEM,
-                            content =
-                                """
-                                You are a helpful senior software engineering assistant.
-                                Give technically accurate and concise answers.
-                                """.trimIndent(),
+                            content = rendered.systemPrompt,
                         ),
                         ChatMessage(
                             role = Role.USER,
-                            content = message,
+                            content = rendered.userPrompt,
                         ),
                     ),
             )

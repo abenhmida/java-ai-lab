@@ -1,0 +1,8 @@
+Explain {topic} to a {audience}.
+
+Include:
+1. Core concept
+2. Architecture
+3. Example
+4. Failure scenarios
+5. Operational considerations

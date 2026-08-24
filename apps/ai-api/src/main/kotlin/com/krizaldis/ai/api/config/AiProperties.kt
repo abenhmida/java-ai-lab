@@ -10,6 +10,7 @@ data class AiProperties(
     val timeout: TimeoutProperties,
     val retry: RetryProperties,
     val openai: OpenAiProperties,
+    val prompt: PromptProperties,
 ) {
     data class ChatProperties(
         val model: String,
@@ -30,5 +31,10 @@ data class AiProperties(
     data class OpenAiProperties(
         val baseUrl: String,
         val apiKey: String,
+    )
+
+    data class PromptProperties(
+        val defaultTemplate: String,
+        val defaultVersion: String,
     )
 }
