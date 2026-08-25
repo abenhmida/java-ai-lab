@@ -1,0 +1,7 @@
+Analyze the following production incident.
+
+Incident description:
+
+{incident}
+
+Return only the JSON object described by the system instructions.
