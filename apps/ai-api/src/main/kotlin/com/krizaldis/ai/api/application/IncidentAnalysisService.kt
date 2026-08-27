@@ -7,6 +7,7 @@ import com.krizaldis.ai.core.ChatRequest
 import com.krizaldis.ai.core.Role
 import com.krizaldis.ai.core.prompt.PromptRegistry
 import com.krizaldis.ai.core.prompt.PromptRenderer
+import com.krizaldis.ai.core.prompt.PromptValidator
 import com.krizaldis.ai.core.prompt.PromptVariables
 import com.krizaldis.ai.core.structured.StructuredOutputParser
 import jakarta.validation.Validator
@@ -15,19 +16,23 @@ import org.springframework.validation.annotation.Validated
 
 @Service
 @Validated
-open class IncidentAnalysisService(
+class IncidentAnalysisService(
     private val chatModel: ChatModel,
     private val promptRegistry: PromptRegistry,
     private val promptRenderer: PromptRenderer,
     private val parser: StructuredOutputParser,
     private val validator: Validator,
 ) {
+    private val promptValidator = PromptValidator()
+
     fun analyze(incident: String): IncidentAnalysis {
         val template =
             promptRegistry.get(
                 "incident-analyzer",
                 "v1",
             )
+
+        promptValidator.validate(template)
 
         val rendered =
             promptRenderer.render(

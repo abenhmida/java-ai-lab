@@ -1,0 +1,7 @@
+curl \
+  -X POST \
+  http://localhost:8080/api/incidents/analyze \
+  -H 'Content-Type: application/json' \
+  -d '{
+    "incident": "Kafka broker 2 is down. Several partitions are under-replicated and consumer lag is increasing."
+  }'

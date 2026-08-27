@@ -4,6 +4,7 @@ data class ChatRequest(
     val messages: List<ChatMessage>,
     val temperature: Double? = null,
     val maxToken: Int? = null,
+    val responseFormat: ResponseFormat = ResponseFormat.TEXT,
 )
 
 data class ChatResult(
