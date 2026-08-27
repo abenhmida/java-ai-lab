@@ -1,4 +1,4 @@
-package com.krizaldis.ai.api.application
+package com.krizaldis.ai.core.indexing
 
 import com.krizaldis.ai.core.embedding.Document
 import com.krizaldis.ai.core.embedding.DocumentChunker
@@ -6,7 +6,7 @@ import com.krizaldis.ai.core.embedding.EmbeddingModel
 import com.krizaldis.ai.core.embedding.VectorDocument
 import com.krizaldis.ai.core.embedding.VectorStore
 
-class DocumentIndexingService(
+class RagIndexer(
     private val chunker: DocumentChunker,
     private val embeddingModel: EmbeddingModel,
     private val vectorStore: VectorStore,
@@ -14,20 +14,29 @@ class DocumentIndexingService(
     fun index(document: Document) {
         val chunks = chunker.chunk(document)
 
-        val embeddings = embeddingModel.embedBatch(chunks.map { it.content })
+        val embeddings =
+            embeddingModel.embedBatch(
+                chunks.map {
+                    it.content
+                },
+            )
 
-        require(embeddings.size == chunks.size) {
-            "Embedding count does not match chunk count"
-        }
+        require(chunks.size == embeddings.size)
 
         chunks.zip(embeddings).forEach { (chunk, embedding) ->
-
             vectorStore.add(
                 VectorDocument(
                     id = chunk.id,
                     content = chunk.content,
                     vector = embedding.vector,
-                    metadata = chunk.metadata,
+                    metadata =
+                        chunk.metadata +
+                            mapOf(
+                                "documentId" to
+                                    chunk.documentId,
+                                "chunkIndex" to
+                                    chunk.chunkIndex.toString(),
+                            ),
                 ),
             )
         }

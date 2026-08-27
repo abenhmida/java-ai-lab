@@ -14,6 +14,7 @@ class FixedSizeChunker(
                     documentId = document.id,
                     content = content,
                     metadata = document.metadata,
+                    chunkIndex = index,
                 )
             }
     }

@@ -11,7 +11,9 @@ data class ChatResult(
     val content: String,
     val model: String,
     val usage: TokenUsage?,
-)
+) {
+    val text: String get() = content
+}
 
 data class TokenUsage(
     val inputTokens: Int,

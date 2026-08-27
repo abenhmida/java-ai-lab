@@ -6,8 +6,8 @@ class BatchingEmbeddingModel(
 ) : EmbeddingModel {
     override fun embed(text: String): Embedding = delegate.embed(text)
 
-    override fun embedAll(texts: List<String>): List<Embedding> =
+    override fun embedBatch(texts: List<String>): List<Embedding> =
         texts.chunked(batchSize).flatMap { batch ->
-            delegate.embedAll(batch)
+            delegate.embedBatch(batch)
         }
 }

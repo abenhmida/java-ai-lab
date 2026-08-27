@@ -19,5 +19,5 @@ class FakeEmbeddingModel : EmbeddingModel {
         )
     }
 
-    override fun embedAll(texts: List<String>): List<Embedding> = texts.map(::embed)
+    override fun embedBatch(texts: List<String>): List<Embedding> = texts.map(::embed)
 }
